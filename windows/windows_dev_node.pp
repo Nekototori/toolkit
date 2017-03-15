@@ -31,7 +31,7 @@ $gem_packages = [
 # This also makes this resource *not* idempotent, but as this is mostly just a
 # one-time provisioning script, that's not a deal-breaker.
 # https://tickets.puppetlabs.com/browse/PUP-6134
-package { $gem_packages:
+package { 'gem_${gem_packages}':
   ensure          => present,
   provider        => 'gem',
   install_options => {
@@ -54,7 +54,7 @@ $apm_packages = [
   'minimap',
 ]
 
-package { $apm_packages:
+package { 'apm_${apm_packages}':
   ensure   => present,
   provider => 'apm',
   require  => Package['atom'],
