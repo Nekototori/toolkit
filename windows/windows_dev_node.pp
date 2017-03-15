@@ -1,4 +1,5 @@
 # GETTING STARTED
+# Originally written by Nate McCurdy
 # 1. Install the Puppet agent from http://downloads.puppetlabs.com/windows/puppet-agent-1.3.6-x64.msi
 # 2. puppet module install chocolatey-chocolatey
 # 3. puppet module install cyberious-apm
