@@ -38,8 +38,8 @@ $gem_packages.each | $gem_pkg | {
     name            => $gem_pkg,
     provider        => 'gem',
     install_options => {
-      '--install-dir' => 'C:\tools\ruby22\lib\ruby\gems\2.2.0',
-      '--bindir'      => 'c:\tools\ruby22\bin'},
+      '--install-dir' => 'C:\tools\ruby23\lib\ruby\gems\2.3.0',
+      '--bindir'      => 'c:\tools\ruby23\bin'},
     require         => Package['ruby'],
   }
 }
