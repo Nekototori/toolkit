@@ -58,7 +58,7 @@ $apm_packages = [
 ]
 
 $apm_packages.each | $apm_pkg | {
-  package { $apm_packages:
+  package { "apm_${apm_pkg}":
     ensure   => present,
     name     => $apm_pkg,
     provider => 'apm',
