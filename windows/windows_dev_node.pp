@@ -22,7 +22,6 @@ package { $choco_packages:
 
 $gem_packages = [
   'puppet-lint',
-  'hiera-eyaml',
   'r10k',
 ]
 
