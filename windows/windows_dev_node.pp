@@ -24,6 +24,7 @@ package { $choco_packages:
 $gem_packages = [
   'puppet-lint',
   'r10k',
+  'hiera-eyaml',
 ]
 
 # Due to the bug at the link below, the install_options need to be set
@@ -31,23 +32,16 @@ $gem_packages = [
 # This also makes this resource *not* idempotent, but as this is mostly just a
 # one-time provisioning script, that's not a deal-breaker.
 # https://tickets.puppetlabs.com/browse/PUP-6134
-package { $gem_packages:
-  ensure          => present,
-  provider        => 'gem',
-  install_options => {
-    '--install-dir' => 'C:\tools\ruby22\lib\ruby\gems\2.2.0',
-    '--bindir'      => 'c:\tools\ruby22\bin'},
-  require         => Package['ruby'],
-}
-#This one off is due to a duplicate namevar for hiera-eyaml in both gem and apm providers.
-package { 'gem_hiera-eyaml':
-  name            => 'hiera-eyaml',
-  ensure          => present,
-  provider        => 'gem',
-  install_options => {
-    '--install-dir' => 'C:\tools\ruby22\lib\ruby\gems\2.2.0',
-    '--bindir'      => 'c:\tools\ruby22\bin'},
-  require         => Package['ruby'],
+$gem_packages.each | $gem_pkg | {
+  package { "gem_${gem_pkg}":
+    ensure          => present,
+    name            => $gem_pkg,
+    provider        => 'gem',
+    install_options => {
+      '--install-dir' => 'C:\tools\ruby22\lib\ruby\gems\2.2.0',
+      '--bindir'      => 'c:\tools\ruby22\bin'},
+    require         => Package['ruby'],
+  }
 }
 
 $apm_packages = [
@@ -56,7 +50,6 @@ $apm_packages = [
   'linter-puppet-lint',
   'linter-erb',
   'linter-puppet-parser',
-  'hiera-eyaml',
   'aligner',
   'aligner-puppet',
   'aligner-ruby',
@@ -64,10 +57,13 @@ $apm_packages = [
   'minimap',
 ]
 
-package { $apm_packages:
-  ensure   => present,
-  provider => 'apm',
-  require  => Package['atom'],
+$apm_packages.each | $apm_pkg | {
+  package { $apm_packages:
+    ensure   => present,
+    name     => $apm_pkg,
+    provider => 'apm',
+    require  => Package['atom'],
+  }
 }
 
 exec { 'git alias: unstage':
