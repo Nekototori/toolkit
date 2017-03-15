@@ -46,7 +46,7 @@ $gem_packages.each | $gem_pkg | {
 
 $apm_packages = [
 #  'language-puppet',
-  'linter',
+#  'linter',
   'linter-puppet-lint',
   'linter-erb',
   'linter-puppet-parser',
