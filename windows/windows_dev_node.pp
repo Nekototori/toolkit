@@ -31,7 +31,17 @@ $gem_packages = [
 # This also makes this resource *not* idempotent, but as this is mostly just a
 # one-time provisioning script, that's not a deal-breaker.
 # https://tickets.puppetlabs.com/browse/PUP-6134
-package { "gem_${gem_packages}":
+package { $gem_packages:
+  ensure          => present,
+  provider        => 'gem',
+  install_options => {
+    '--install-dir' => 'C:\tools\ruby22\lib\ruby\gems\2.2.0',
+    '--bindir'      => 'c:\tools\ruby22\bin'},
+  require         => Package['ruby'],
+}
+#This one off is due to a duplicate namevar for hiera-eyaml in both gem and apm providers.
+package { gem_hiera-eyaml:
+  name            => 'hiera-eyaml',
   ensure          => present,
   provider        => 'gem',
   install_options => {
@@ -54,7 +64,7 @@ $apm_packages = [
   'minimap',
 ]
 
-package { "apm_${apm_packages}":
+package { $apm_packages:
   ensure   => present,
   provider => 'apm',
   require  => Package['atom'],
