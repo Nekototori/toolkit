@@ -39,7 +39,7 @@ package { $gem_packages:
   require         => Package['ruby'],
 }
 #This one off is due to a duplicate namevar for hiera-eyaml in both gem and apm providers.
-package { gem_hiera-eyaml:
+package { 'gem_hiera-eyaml':
   name            => 'hiera-eyaml',
   ensure          => present,
   provider        => 'gem',
